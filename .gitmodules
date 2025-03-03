@@ -1,0 +1,3 @@
+[submodule "RomM"]
+	path = RomM
+	url = https://github.com/rommapp/muos-app.git
