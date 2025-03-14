@@ -27,21 +27,8 @@ cd "$PPSSPP_DIR" || exit
 
 SET_VAR "system" "foreground_process" "PPSSPP"
 
-FB_SWITCH 960 720 32
-
 sed -i '/^GraphicsBackend\|^FailedGraphicsBackends\|^DisabledGraphicsBackends/d' "$PPSSPP_DIR/.config/ppsspp/PSP/SYSTEM/ppsspp.ini"
 
 SDL_ASSERT=always_ignore SDL_GAMECONTROLLERCONFIG=$(grep "muOS-Keys" "/opt/muos/device/current/control/gamecontrollerdb_retro.txt") ./PPSSPP
-
-# Do it twice, it's just as nice!
-cat /dev/zero >"$(GET_VAR "device" "screen/device")" 2>/dev/null
-cat /dev/zero >"$(GET_VAR "device" "screen/device")" 2>/dev/null
-
-SCREEN_TYPE="internal"
-if [ "$(cat "$(GET_VAR "device" "screen/hdmi")")" -eq 1 ] && [ "$(GET_VAR "device" "board/hdmi")" -eq 1 ]; then
-	SCREEN_TYPE="external"
-fi
-
-FB_SWITCH "$(GET_VAR "device" "screen/$SCREEN_TYPE/width")" "$(GET_VAR "device" "screen/$SCREEN_TYPE/height")" 32
 
 unset SDL_HQ_SCALER SDL_ROTATION SDL_BLITTER_DISABLED
