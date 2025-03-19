@@ -43,4 +43,11 @@ esac
 
 HOME="$EMUDIR" SDL_ASSERT=always_ignore SDL_GAMECONTROLLERCONFIG=$(grep "muOS-Keys" "/usr/lib/gamecontrollerdb.txt") nice --20 ./scummvm --logfile="$LOGPATH" --joystick=0 --config="$CONFIG"
 
+# Switch analogue<>dpad back so we can navigate muX
+[ "$(GET_VAR "device" "board/stick")" -eq 0 ]
+case "$(GET_VAR "device" "board/name")" in
+	rg*) echo "0" >"/sys/class/power_supply/axp2202-battery/nds_pwrkey" ;;
+	*) ;;
+esac
+
 unset SDL_HQ_SCALER SDL_ROTATION SDL_BLITTER_DISABLED
