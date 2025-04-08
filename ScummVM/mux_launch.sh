@@ -28,6 +28,7 @@ EMUDIR="$(GET_VAR "device" "storage/rom/mount")/MUOS/emulator/scummvm"
 CONFIG="$EMUDIR/.config/scummvm/scummvm.ini"
 LOGPATH="/mnt/mmc/MUOS/log/scummvm/log.txt"
 SAVE="/run/muos/storage/save/file/ScummVM-Ext"
+TUI_DPAD="/tmp/trimui_inputd/input_dpad_to_joystick"
 
 mkdir -p "$SAVE"
 chmod +x "$EMUDIR"/scummvm
@@ -38,6 +39,11 @@ cd "$EMUDIR" || exit
 [ "$(GET_VAR "device" "board/stick")" -eq 0 ] && STICK_ROT=2 || STICK_ROT=0
 case "$(GET_VAR "device" "board/name")" in
 	rg*) echo "$STICK_ROT" >"/sys/class/power_supply/axp2202-battery/nds_pwrkey" ;;
+	tui*)
+		if [ ! -f $TUI_DPAD ]; then
+			touch $TUI_DPAD
+		fi
+    ;;
 	*) ;;
 esac
 
@@ -47,6 +53,11 @@ HOME="$EMUDIR" SDL_ASSERT=always_ignore SDL_GAMECONTROLLERCONFIG=$(grep "muOS-Ke
 [ "$(GET_VAR "device" "board/stick")" -eq 0 ]
 case "$(GET_VAR "device" "board/name")" in
 	rg*) echo "0" >"/sys/class/power_supply/axp2202-battery/nds_pwrkey" ;;
+	tui*)
+		if [ -f $TUI_DPAD ]; then
+			rm $TUI_DPAD
+		fi
+    ;;
 	*) ;;
 esac
 
