@@ -32,11 +32,13 @@ case "$(GET_VAR "device" "board/name")" in
         sed -i '/^GraphicsBackend\|^FailedGraphicsBackends\|^DisabledGraphicsBackends/d' "$PPSSPP_DIR/.config/ppsspp/PSP/SYSTEM/ppsspp.ini"
         ;;
     tui*)
+        export PVR_DEBUG="enable_memory_model,disable_texture_merging,force_16bpp"
+        export __PVR_SYNC_DEBUG=2
         echo 1 >/sys/module/pvrsrvkm/parameters/DisableClockGating
         echo 1 >/sys/module/pvrsrvkm/parameters/EnableFWContextSwitch
         echo 1 >/sys/module/pvrsrvkm/parameters/EnableSoftResetContextSwitch
         echo 0 >/sys/module/pvrsrvkm/parameters/PVRDebugLevel
-        export LD_LIBRARY_PATH="$PPSSPP_DIR/lib_tui:$LD_LIBRARY_PATH"
+        export LD_LIBRARY_PATH="$PPSSPP_DIR/lib:$LD_LIBRARY_PATH"
         rm -rf "$PPSSPP_DIR/.config/ppsspp/PSP/SYSTEM/CACHE/"*
 		for CPU in 0 1 2 3; do
 		echo 1 > "/sys/devices/system/cpu/cpu$CPU/online"
