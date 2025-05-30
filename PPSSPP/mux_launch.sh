@@ -13,7 +13,7 @@ case "$(GET_VAR "device" "board/name")" in
 	rg*)
 		PPSSPP_DIR="${PPSSPP_DIR}/rg"
 
-		if [ "$(GET_VAR "global" "boot/device_mode")" -eq 1 ]; then
+		if [ "$(GET_VAR "config" "boot/device_mode")" -eq 1 ]; then
 			SDL_HQ_SCALER=2
 			SDL_ROTATION=0
 			SDL_BLITTER_DISABLED=1
