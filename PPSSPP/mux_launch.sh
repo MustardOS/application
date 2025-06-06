@@ -54,6 +54,6 @@ cd "$PPSSPP_DIR" || exit
 
 SET_VAR "system" "foreground_process" "PPSSPP"
 
-SDL_ASSERT=always_ignore SDL_GAMECONTROLLERCONFIG=$(grep "muOS-Keys" "/opt/muos/device/current/control/gamecontrollerdb_retro.txt") ./PPSSPP
+SDL_ASSERT=always_ignore SDL_GAMECONTROLLERCONFIG=$(grep "muOS-Keys" "/usr/lib/gamecontrollerdb.txt") ./PPSSPP
 
 unset SDL_HQ_SCALER SDL_ROTATION SDL_BLITTER_DISABLED
